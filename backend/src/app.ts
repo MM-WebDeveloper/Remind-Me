@@ -6,7 +6,7 @@ const app = express();
 
 app.get('/', async (req, res) => {
 	const notes = await NoteModel.find().exec();
-	res.send(notes);
+	res.status(200).json(notes);
 });
 
 export default app;
