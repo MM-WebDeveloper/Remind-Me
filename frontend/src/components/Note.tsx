@@ -1,3 +1,4 @@
+import styles from '../styles/Note.module.css';
 import { Note as NoteModel } from '../models/note';
 
 interface NoteProps {
@@ -7,7 +8,7 @@ interface NoteProps {
 const Note = ({ note }: NoteProps) => {
 	const { title, text, createdAt, updatedAt } = note;
 	return (
-		<div style={{ border: '1px solid black' }}>
+		<div className={styles.card}>
 			<p>Title: {title}</p>
 			<p>Description: {text}</p>
 			<p>Created: {createdAt}</p>
