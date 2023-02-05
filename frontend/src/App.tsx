@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Note from './components/Note';
 import { Note as NoteModel } from './models/note';
+import * as NotesApi from './network/notes.api';
 
 const App = () => {
 	const [notes, setNotes] = useState<NoteModel[]>([]);
@@ -9,10 +10,7 @@ const App = () => {
 		console.log('happened');
 		const getNotes = async () => {
 			try {
-				const response = await fetch('/api/notes', {
-					method: 'GET',
-				});
-				const notes = await response.json();
+				const notes = await NotesApi.fetchNotes();
 				setNotes(notes);
 				console.log(notes);
 			} catch (error) {
