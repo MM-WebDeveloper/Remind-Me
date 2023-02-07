@@ -21,7 +21,7 @@ export async function fetchNotes(): Promise<Note[]> {
 
 export interface NoteInput {
 	title: string;
-	text?: string;
+	description?: string;
 }
 
 export async function createNote(note: NoteInput): Promise<Note> {
