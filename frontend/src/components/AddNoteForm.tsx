@@ -13,6 +13,7 @@ const AddNoteForm = ({ cancelAddNote, onNoteSaved }: AddNoteFormProps) => {
 		title: '',
 		text: '',
 	});
+	const [addError, setAddError] = useState<string | null>(null);
 
 	const onSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -22,8 +23,9 @@ const AddNoteForm = ({ cancelAddNote, onNoteSaved }: AddNoteFormProps) => {
 			onNoteSaved(newNote);
 			cancelAddNote();
 		} catch (error) {
-			console.log(typeof error);
-			alert(error);
+			let message = 'Unknown Error';
+			if (error instanceof Error) message = error.message;
+			setAddError(message);
 		}
 	};
 
@@ -46,6 +48,7 @@ const AddNoteForm = ({ cancelAddNote, onNoteSaved }: AddNoteFormProps) => {
 					name='text'
 					id='text'
 				/>
+				{addError && <p>{addError}</p>}
 				<button onClick={cancelAddNote}>Cancel</button>
 				<button type='submit'>Submit</button>
 			</form>
