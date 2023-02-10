@@ -9,7 +9,6 @@ const App = () => {
 	const [showAddNoteForm, setShowAddNoteForm] = useState(false);
 
 	useEffect(() => {
-		console.log('happened');
 		const getNotes = async () => {
 			try {
 				const notes = await NotesApi.fetchNotes();
@@ -23,6 +22,11 @@ const App = () => {
 		getNotes();
 	}, []);
 
+	const onNoteSaved = (note: NoteModel) => {
+		const updatedNotes = [...notes, note];
+		setNotes(updatedNotes);
+	};
+
 	return (
 		<>
 			<button onClick={() => setShowAddNoteForm(true)}>Add new note</button>
@@ -33,7 +37,7 @@ const App = () => {
 			</div>
 			{showAddNoteForm && (
 				<AddNoteForm
-					onNoteSaved={() => console.log('Hi')}
+					onNoteSaved={onNoteSaved}
 					cancelAddNote={() => setShowAddNoteForm(false)}
 				/>
 			)}

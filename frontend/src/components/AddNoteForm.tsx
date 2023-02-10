@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Note } from '../models/note';
 import * as NotesApi from '../network/notes.api';
-import { NoteInput } from '../network/notes.api';
 import styles from '../styles/AddNoteForm.module.css';
 
 interface AddNoteFormProps {
@@ -12,27 +11,36 @@ interface AddNoteFormProps {
 const AddNoteForm = ({ cancelAddNote, onNoteSaved }: AddNoteFormProps) => {
 	const [note, setNote] = useState({
 		title: '',
-		string: '',
+		description: '',
 	});
 
-	const onSubmit = async (input: NoteInput) => {
+	const onSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
 		try {
-			const note = await NotesApi.createNote(input);
-
-			console.log(note);
+			const newNote = await NotesApi.createNote(note);
+			onNoteSaved(newNote);
+			cancelAddNote();
 		} catch (error) {
 			console.log(error);
+			alert(error);
 		}
 	};
 
 	return (
 		<div className={styles.addNoteForm}>
 			<p>AddNoteForm</p>
-			<form onSubmit={() => onSubmit(note)} action='submit'>
+			<form onSubmit={(e) => onSubmit(e)} action='submit'>
 				<label htmlFor='Title'>Title</label>
-				<input type='text' placeholder='Title' name='title' id='title' />
+				<input
+					onChange={(e) => setNote({ ...note, title: e.target.value })}
+					type='text'
+					placeholder='Title'
+					name='title'
+					id='title'
+				/>
 				<label htmlFor='Description'>Description</label>
 				<textarea
+					onChange={(e) => setNote({ ...note, description: e.target.value })}
 					placeholder='Description'
 					name='description'
 					id='description'
