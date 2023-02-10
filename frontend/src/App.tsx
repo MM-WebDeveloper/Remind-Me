@@ -7,6 +7,7 @@ import * as NotesApi from './network/notes.api';
 const App = () => {
 	const [notes, setNotes] = useState<NoteModel[]>([]);
 	const [showAddNoteForm, setShowAddNoteForm] = useState(false);
+	const [errors, setErrors] = useState([]);
 
 	useEffect(() => {
 		const getNotes = async () => {

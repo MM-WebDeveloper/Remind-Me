@@ -20,7 +20,7 @@ const Note = ({ note }: NoteProps) => {
 	return (
 		<div className={styles.card}>
 			<p>Title: {title}</p>
-			<p>Description: {text}</p>
+			<p>Text: {text}</p>
 			<p>{createdUpdatedText}</p>
 		</div>
 	);

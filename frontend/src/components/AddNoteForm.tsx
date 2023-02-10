@@ -11,17 +11,18 @@ interface AddNoteFormProps {
 const AddNoteForm = ({ cancelAddNote, onNoteSaved }: AddNoteFormProps) => {
 	const [note, setNote] = useState({
 		title: '',
-		description: '',
+		text: '',
 	});
 
 	const onSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
 			const newNote = await NotesApi.createNote(note);
+			console.log(newNote);
 			onNoteSaved(newNote);
 			cancelAddNote();
 		} catch (error) {
-			console.log(error);
+			console.log(typeof error);
 			alert(error);
 		}
 	};
@@ -38,12 +39,12 @@ const AddNoteForm = ({ cancelAddNote, onNoteSaved }: AddNoteFormProps) => {
 					name='title'
 					id='title'
 				/>
-				<label htmlFor='Description'>Description</label>
+				<label htmlFor='Textn'>Text</label>
 				<textarea
-					onChange={(e) => setNote({ ...note, description: e.target.value })}
-					placeholder='Description'
-					name='description'
-					id='description'
+					onChange={(e) => setNote({ ...note, text: e.target.value })}
+					placeholder='Text'
+					name='text'
+					id='text'
 				/>
 				<button onClick={cancelAddNote}>Cancel</button>
 				<button type='submit'>Submit</button>
