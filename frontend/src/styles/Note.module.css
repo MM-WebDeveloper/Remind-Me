@@ -1,4 +1,10 @@
 .card {
 	background: #fff8dc;
 	border: 1px solid #000;
+	width: 400px;
+	height: 150px;
+	margin-top: 10px;
+	margin-left: 10px;
+	padding: 10px;
+	box-shadow: #000 5px 5px 15px;
 }

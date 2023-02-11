@@ -19,7 +19,6 @@ const AddNoteForm = ({ cancelAddNote, onNoteSaved }: AddNoteFormProps) => {
 		e.preventDefault();
 		try {
 			const newNote = await NotesApi.createNote(note);
-			console.log(newNote);
 			onNoteSaved(newNote);
 			cancelAddNote();
 		} catch (error) {
