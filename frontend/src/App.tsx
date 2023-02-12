@@ -27,12 +27,25 @@ const App = () => {
 		setNotes(updatedNotes);
 	};
 
+	const deleteNote = async (note: NoteModel) => {
+		try {
+			await NotesApi.deleteNote(note._id);
+			const updatedNotes = notes.filter(
+				(existingNote) => existingNote._id !== note._id
+			);
+			setNotes(updatedNotes);
+		} catch (error) {
+			console.error(error);
+			alert(error);
+		}
+	};
+
 	return (
 		<>
 			<button onClick={() => setShowAddNoteForm(true)}>Add new note</button>
 			<div>
 				{notes.map((note) => (
-					<Note key={note._id} note={note} />
+					<Note key={note._id} note={note} deleteNote={deleteNote} />
 				))}
 			</div>
 			{showAddNoteForm && (
