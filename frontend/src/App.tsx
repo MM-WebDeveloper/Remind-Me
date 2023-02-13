@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import AddNoteForm from './components/AddNoteForm';
+import NoteModal from './components/NoteModal';
 import Note from './components/Note';
 import { Note as NoteModel } from './models/note';
 import * as NotesApi from './network/notes.api';
 
 const App = () => {
 	const [notes, setNotes] = useState<NoteModel[]>([]);
-	const [showAddNoteForm, setShowAddNoteForm] = useState(false);
+	const [showNoteModal, setShowNoteModal] = useState(false);
+	const [noteToEdit, setNoteToEdit] = useState<NoteModel | null>(null);
 
 	useEffect(() => {
 		const getNotes = async () => {
@@ -22,9 +23,18 @@ const App = () => {
 		getNotes();
 	}, []);
 
-	const onNoteSaved = (note: NoteModel) => {
+	const onNoteAdded = (note: NoteModel) => {
 		const updatedNotes = [...notes, note];
 		setNotes(updatedNotes);
+	};
+
+	const onNoteEdited = async (note: NoteModel) => {
+		setNotes(
+			notes.map((existingNote) =>
+				existingNote._id === note._id ? note : existingNote
+			)
+		);
+		setNoteToEdit(null);
 	};
 
 	const deleteNote = async (note: NoteModel) => {
@@ -40,18 +50,33 @@ const App = () => {
 		}
 	};
 
+	const editNote = async (note: NoteModel) => {
+		setNoteToEdit(note);
+		setShowNoteModal(true);
+	};
+
 	return (
 		<>
-			<button onClick={() => setShowAddNoteForm(true)}>Add new note</button>
+			<button onClick={() => setShowNoteModal(true)}>Add new note</button>
 			<div>
 				{notes.map((note) => (
-					<Note key={note._id} note={note} deleteNote={deleteNote} />
+					<Note
+						key={note._id}
+						editNote={editNote}
+						note={note}
+						deleteNote={deleteNote}
+					/>
 				))}
 			</div>
-			{showAddNoteForm && (
-				<AddNoteForm
-					onNoteSaved={onNoteSaved}
-					cancelAddNote={() => setShowAddNoteForm(false)}
+			{showNoteModal && (
+				<NoteModal
+					noteToEdit={noteToEdit}
+					onNoteAdded={onNoteAdded}
+					onNoteEdited={onNoteEdited}
+					cancelNoteModal={() => {
+						setShowNoteModal(false);
+						setNoteToEdit(null);
+					}}
 				/>
 			)}
 		</>
