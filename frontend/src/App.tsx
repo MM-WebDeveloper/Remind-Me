@@ -14,7 +14,6 @@ const App = () => {
 			try {
 				const notes = await NotesApi.fetchNotes();
 				setNotes(notes);
-				console.log(notes);
 			} catch (error) {
 				console.error(error);
 			}

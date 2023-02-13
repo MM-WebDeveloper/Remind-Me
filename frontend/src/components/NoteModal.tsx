@@ -24,7 +24,6 @@ const NoteModal = ({
 
 	const onSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		console.log('dude I happened!');
 		let newNote;
 		try {
 			if (noteToEdit) {

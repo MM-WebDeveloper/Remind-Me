@@ -1,6 +1,8 @@
 import styles from '../styles/Note.module.css';
 import { Note as NoteModel } from '../models/note';
 import { formatDate } from '../utils/formatDate';
+import { faTrash, faPen } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface NoteProps {
 	note: NoteModel;
@@ -26,16 +28,18 @@ const Note = ({ note, deleteNote, editNote }: NoteProps) => {
 					deleteNote(note);
 					e.stopPropagation();
 				}}
+				className={[styles.button, styles.red].join(' ')}
 			>
-				Delete
+				<FontAwesomeIcon icon={faTrash} />
 			</button>
 			<button
 				onClick={(e) => {
 					editNote(note);
 					e.stopPropagation();
 				}}
+				className={[styles.button, styles.green].join(' ')}
 			>
-				Edit
+				<FontAwesomeIcon icon={faPen} />
 			</button>
 			<p>Title: {title}</p>
 			<p>Text: {text}</p>
