@@ -20,16 +20,16 @@ export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
 	}
 };
 
-interface SignUpBody {
+interface RegisterBody {
 	username?: string;
 	email?: string;
 	password: string;
 }
 
-export const signUp: RequestHandler<
+export const Register: RequestHandler<
 	unknown,
 	unknown,
-	SignUpBody,
+	RegisterBody,
 	unknown
 > = async (req, res, next) => {
 	const username = req.body.username;
@@ -38,7 +38,7 @@ export const signUp: RequestHandler<
 
 	try {
 		if (!username || !email || !passwordRaw) {
-			throw createHttpError(400, 'Signup paramters missing');
+			throw createHttpError(400, 'Register parameters missing');
 		}
 
 		const userExists = await UserModel.findOne({ username }).exec();
