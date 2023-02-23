@@ -55,7 +55,7 @@ const NoteModal = ({
 					id='title'
 					value={note.title}
 				/>
-				<label htmlFor='Textn'>Text</label>
+				<label htmlFor='Text'>Text</label>
 				<textarea
 					onChange={(e) => setNote({ ...note, text: e.target.value })}
 					placeholder='Text'
