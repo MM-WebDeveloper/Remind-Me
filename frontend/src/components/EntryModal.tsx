@@ -1,24 +1,27 @@
 import { useState } from 'react';
 import { User } from '../models/user';
+import * as UsersApi from '../network/users.api';
 
-interface RegisterModalProps {
+interface EntryModalProps {
 	cancelNoteModal: () => void;
 	registerSuccessful: (user: User) => void;
 }
 
-const RegisterModal = ({
-	cancelNoteModal,
-	registerSuccessful,
-}: RegisterModalProps) => {
+// const RegisterModal = ({
+// 	cancelNoteModal,
+// 	registerSuccessful,
+// }: RegisterModalProps) => {
+const EntryModal = () => {
 	const [user, setUser] = useState({
 		username: '',
 		email: '',
 		password: '',
 	});
 
-	const onSubmit = (e: React.FormEvent) => {
+	const onSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		console.log(user);
+		const newUser = await UsersApi.registerUser(user);
+		console.log(newUser);
 	};
 
 	return (
@@ -48,12 +51,12 @@ const RegisterModal = ({
 					name='password'
 					id='password'
 				/>
-				<button onClick={cancelNoteModal}>Cancel</button>
-				<button id='noteMutation' type='submit'>
+				<button>Cancel</button>
+				<button id='userMutation' type='submit'>
 					Submit
 				</button>
 			</form>
 		</div>
 	);
 };
-export default RegisterModal;
+export default EntryModal;

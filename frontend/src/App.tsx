@@ -4,6 +4,7 @@ import Note from './components/Note';
 import { Note as NoteModel } from './models/note';
 import * as NotesApi from './network/notes.api';
 import Spinner from './components/Spinner';
+import EntryModal from './components/EntryModal';
 
 const App = () => {
 	const [notes, setNotes] = useState<NoteModel[]>([]);
@@ -97,6 +98,7 @@ const App = () => {
 					}}
 				/>
 			)}
+			{true && <EntryModal />}
 		</>
 	);
 };
