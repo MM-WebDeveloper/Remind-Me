@@ -3,15 +3,17 @@ import { User } from '../models/user';
 import * as UsersApi from '../network/users.api';
 
 interface EntryModalProps {
-	typeOfEntry: string;
+	typeOfEntry: boolean;
 	cancelEntryModal: () => void;
 	onUserRegistered: (user: User) => void;
+	onUserLoggedIn: (user: User) => void;
 }
 
 const EntryModal = ({
 	typeOfEntry,
 	cancelEntryModal,
 	onUserRegistered,
+	onUserLoggedIn,
 }: EntryModalProps) => {
 	const [user, setUser] = useState({
 		username: '',
@@ -24,8 +26,13 @@ const EntryModal = ({
 		e.preventDefault();
 
 		try {
-			const newUser = await UsersApi.registerUser(user);
-			onUserRegistered(newUser);
+			if (typeOfEntry) {
+				const newUser = await UsersApi.registerUser(user);
+				onUserRegistered(newUser);
+			} else {
+				const loggedInUser = await UsersApi.loginUser(user);
+				onUserLoggedIn(loggedInUser);
+			}
 		} catch (error) {
 			alert(error);
 			let message = 'Unknown Error';
@@ -37,38 +44,40 @@ const EntryModal = ({
 	return (
 		<div>
 			<form id='userMutation' onSubmit={(e) => onSubmit(e)} action='submit'>
-				{typeOfEntry !== 'register' ? null : (
+				<label htmlFor='Username'>Username</label>
+				<input
+					onChange={(e) => setUser({ ...user, username: e.target.value })}
+					type='text'
+					placeholder='Username'
+					name='username'
+					id='username'
+				/>
+
+				{typeOfEntry ? (
 					<>
-						<label htmlFor='Username'>Username</label>
+						<label htmlFor='Email'>Email</label>
 						<input
-							onChange={(e) => setUser({ ...user, username: e.target.value })}
+							onChange={(e) => setUser({ ...user, email: e.target.value })}
 							type='text'
-							placeholder='Username'
-							name='username'
-							id='username'
+							placeholder='Email'
+							name='email'
+							id='email'
 						/>
 					</>
-				)}
-				<label htmlFor='Email'>Email</label>
-				<input
-					onChange={(e) => setUser({ ...user, email: e.target.value })}
-					type='text'
-					placeholder='Email'
-					name='email'
-					id='email'
-				/>
+				) : null}
+
 				<label htmlFor='Password'>Password</label>
 				<input
 					onChange={(e) => setUser({ ...user, password: e.target.value })}
-					type='text'
+					type='password'
 					placeholder='Password'
 					name='password'
 					id='password'
 				/>
 				{entryError && <p>{entryError}</p>}
-				<button>Cancel</button>
+				<button onClick={cancelEntryModal}>Cancel</button>
 				<button id='userMutation' type='submit'>
-					{typeOfEntry === 'register' ? 'Register' : 'Login'}
+					{typeOfEntry ? 'Register' : 'Login'}
 				</button>
 			</form>
 		</div>

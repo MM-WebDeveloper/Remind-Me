@@ -12,7 +12,7 @@ const App = () => {
 	const [notesLoadingError, setNotesLoadingError] = useState(false);
 	const [showNoteModal, setShowNoteModal] = useState(false);
 	const [showEntryModal, setShowEntryModal] = useState(false);
-	const [typeOfEntry, setTypeOfEntry] = useState('register');
+	const [typeOfEntry, setTypeOfEntry] = useState(true);
 	const [noteToEdit, setNoteToEdit] = useState<NoteModel | null>(null);
 
 	useEffect(() => {
@@ -49,6 +49,10 @@ const App = () => {
 
 	const onUserRegistered = () => {
 		console.log('Hi from onUserRegistered');
+	};
+
+	const onUserLoggedIn = () => {
+		console.log('Hi from onUserLoggedIn');
 	};
 
 	const deleteNote = async (note: NoteModel) => {
@@ -108,6 +112,7 @@ const App = () => {
 				<EntryModal
 					typeOfEntry={typeOfEntry}
 					onUserRegistered={onUserRegistered}
+					onUserLoggedIn={onUserLoggedIn}
 					cancelEntryModal={() => {
 						setShowEntryModal(false);
 					}}
