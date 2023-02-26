@@ -5,6 +5,7 @@ import { Note as NoteModel } from './models/note';
 import * as NotesApi from './network/notes.api';
 import Spinner from './components/Spinner';
 import EntryModal from './components/EntryModal';
+import Navbar from './components/Navbar';
 
 const App = () => {
 	const [notes, setNotes] = useState<NoteModel[]>([]);
@@ -73,8 +74,24 @@ const App = () => {
 		setShowNoteModal(true);
 	};
 
+	const onLogin = async () => {
+		console.log('Hi from onLogin');
+	};
+	const onRegister = async () => {
+		console.log('Hi from onRegister');
+	};
+	const onLogout = async () => {
+		console.log('Hi from onLogout');
+	};
+
 	return (
 		<>
+			<Navbar
+				loggedInUser={null}
+				onLogin={onLogin}
+				onRegister={onRegister}
+				onLogout={onLogout}
+			/>
 			<button onClick={() => setShowNoteModal(true)}>Add new note</button>
 			{notesLoading && <Spinner />}
 			{notesLoadingError && <p>500 Internal Server Error</p>}
