@@ -11,15 +11,22 @@ const NavbarLoggedOutView = ({
 }: NavbarLoggedOutViewProps) => {
 	const [showEntryModal, setShowEntryModal] = useState(false);
 	const [typeOfEntry, setTypeOfEntry] = useState(false);
+	const [entryError, setEntryError] = useState<string | null>();
 
 	const displayRegisterFields = () => {
+		setEntryError(null);
 		setTypeOfEntry(true);
 		setShowEntryModal(true);
 	};
 
 	const displayLoginFields = () => {
+		setEntryError(null);
 		setTypeOfEntry(false);
 		setShowEntryModal(true);
+	};
+
+	const displayEntryError = (message: string) => {
+		setEntryError(message);
 	};
 
 	return (
@@ -31,6 +38,8 @@ const NavbarLoggedOutView = ({
 			{showEntryModal && (
 				<EntryModal
 					typeOfEntry={typeOfEntry}
+					displayEntryError={displayEntryError}
+					entryError={entryError!}
 					onAuthentication={onAuthentication}
 					cancelEntryModal={() => setShowEntryModal(false)}
 				/>

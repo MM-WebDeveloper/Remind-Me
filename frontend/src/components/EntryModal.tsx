@@ -4,12 +4,16 @@ import * as UsersApi from '../network/users.api';
 
 interface EntryModalProps {
 	typeOfEntry: boolean;
+	entryError: string | null;
+	displayEntryError: (message: string) => void;
 	onAuthentication: (user: User) => void;
 	cancelEntryModal: () => void;
 }
 
 const EntryModal = ({
 	typeOfEntry,
+	entryError,
+	displayEntryError,
 	onAuthentication,
 	cancelEntryModal,
 }: EntryModalProps) => {
@@ -18,7 +22,6 @@ const EntryModal = ({
 		email: '',
 		password: '',
 	});
-	const [entryError, setEntryError] = useState<string | null>(null);
 
 	const onSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -36,7 +39,7 @@ const EntryModal = ({
 			alert(error);
 			let message = 'Unknown Error';
 			if (error instanceof Error) message = error.message;
-			setEntryError(message);
+			displayEntryError(message);
 		}
 	};
 
