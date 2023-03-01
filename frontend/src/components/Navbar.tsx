@@ -4,7 +4,6 @@ import NavbarLoggedOutView from './NavbarLoggedOutView';
 
 interface NavbarProps {
 	authenticatedUser: User | null;
-	// onRegister: () => void;
 	onAuthentication: (user: User) => void;
 	onLogout: () => void;
 }
@@ -13,10 +12,7 @@ const Navbar = ({
 	authenticatedUser,
 	onAuthentication,
 	onLogout,
-}: // onRegister,
-// onLogin,
-// onLogout,
-NavbarProps) => {
+}: NavbarProps) => {
 	return (
 		<nav>
 			<div>Logo</div>
