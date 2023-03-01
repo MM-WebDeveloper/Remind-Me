@@ -2,11 +2,14 @@ import { User } from '../models/user';
 import * as UsersApi from '../network/users.api';
 
 interface NavbarLoggedInViewProps {
-	user: User;
+	authenticatedUser: User;
 	onLogout: () => void;
 }
 
-const NavbarLoggedInView = ({ user, onLogout }: NavbarLoggedInViewProps) => {
+const NavbarLoggedInView = ({
+	authenticatedUser,
+	onLogout,
+}: NavbarLoggedInViewProps) => {
 	const logout = async () => {
 		try {
 			await UsersApi.logoutUser();
@@ -19,7 +22,7 @@ const NavbarLoggedInView = ({ user, onLogout }: NavbarLoggedInViewProps) => {
 
 	return (
 		<>
-			<p>{user.username}</p>
+			<p>{authenticatedUser.username}</p>
 			<button onClick={logout}>Logout</button>
 		</>
 	);

@@ -4,16 +4,14 @@ import * as UsersApi from '../network/users.api';
 
 interface EntryModalProps {
 	typeOfEntry: boolean;
+	onAuthentication: (user: User) => void;
 	cancelEntryModal: () => void;
-	onUserRegistered: (user: User) => void;
-	onUserLoggedIn: (user: User) => void;
 }
 
 const EntryModal = ({
 	typeOfEntry,
+	onAuthentication,
 	cancelEntryModal,
-	onUserRegistered,
-	onUserLoggedIn,
 }: EntryModalProps) => {
 	const [user, setUser] = useState({
 		username: '',
@@ -28,10 +26,11 @@ const EntryModal = ({
 		try {
 			if (typeOfEntry) {
 				const newUser = await UsersApi.registerUser(user);
-				onUserRegistered(newUser);
+				onAuthentication(newUser);
 			} else {
+				console.log('I happened');
 				const loggedInUser = await UsersApi.loginUser(user);
-				onUserLoggedIn(loggedInUser);
+				onAuthentication(loggedInUser);
 			}
 		} catch (error) {
 			alert(error);

@@ -1,16 +1,40 @@
+import { useState } from 'react';
+import { User } from '../models/user';
+import EntryModal from './EntryModal';
+
 interface NavbarLoggedOutViewProps {
-	onRegister: () => void;
-	onLogin: () => void;
+	onAuthentication: (user: User) => void;
 }
 
 const NavbarLoggedOutView = ({
-	onRegister,
-	onLogin,
+	onAuthentication,
 }: NavbarLoggedOutViewProps) => {
+	const [showEntryModal, setShowEntryModal] = useState(false);
+	const [typeOfEntry, setTypeOfEntry] = useState(false);
+
+	const displayRegisterFields = () => {
+		setTypeOfEntry(true);
+		setShowEntryModal(true);
+	};
+
+	const displayLoginFields = () => {
+		setTypeOfEntry(false);
+		setShowEntryModal(true);
+	};
+
 	return (
 		<>
-			<button onClick={onRegister}>Register</button>
-			<button onClick={onLogin}>Login</button>
+			<div>
+				<button onClick={displayRegisterFields}>Register</button>
+				<button onClick={displayLoginFields}>Login</button>
+			</div>
+			{showEntryModal && (
+				<EntryModal
+					typeOfEntry={typeOfEntry}
+					onAuthentication={onAuthentication}
+					cancelEntryModal={() => setShowEntryModal(false)}
+				/>
+			)}
 		</>
 	);
 };
