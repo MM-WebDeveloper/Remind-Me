@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { User } from '../models/user';
 import * as UsersApi from '../network/users.api';
 
@@ -22,6 +22,10 @@ const EntryModal = ({
 		email: '',
 		password: '',
 	});
+
+	useEffect(() => {
+		setUser({ username: '', email: '', password: '' });
+	}, [typeOfEntry]);
 
 	const onSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -53,6 +57,7 @@ const EntryModal = ({
 					placeholder='Username'
 					name='username'
 					id='username'
+					value={user.username}
 				/>
 
 				{typeOfEntry ? (
@@ -64,6 +69,7 @@ const EntryModal = ({
 							placeholder='Email'
 							name='email'
 							id='email'
+							value={user.email}
 						/>
 					</>
 				) : null}
@@ -75,6 +81,7 @@ const EntryModal = ({
 					placeholder='Password'
 					name='password'
 					id='password'
+					value={user.password}
 				/>
 				{entryError && <p>{entryError}</p>}
 				<button onClick={cancelEntryModal}>Cancel</button>
