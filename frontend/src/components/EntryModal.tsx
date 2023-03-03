@@ -84,7 +84,9 @@ const EntryModal = ({
 					value={user.password}
 				/>
 				{entryError && <p>{entryError}</p>}
-				<button onClick={cancelEntryModal}>Cancel</button>
+				<button type='button' onClick={cancelEntryModal}>
+					Cancel
+				</button>
 				<button id='userMutation' type='submit'>
 					{typeOfEntry ? 'Register' : 'Login'}
 				</button>
