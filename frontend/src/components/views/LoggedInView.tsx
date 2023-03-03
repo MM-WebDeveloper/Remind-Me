@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import NoteModal from '../components/NoteModal';
-import Note from '../components/Note';
-import { Note as NoteModel } from '../models/note';
-import * as NotesApi from '../network/notes.api';
-import Spinner from '../components/Spinner';
+import NoteModal from '../NoteModal';
+import Note from '../Note';
+import { Note as NoteModel } from '../../models/note';
+import * as NotesApi from '../../network/notes.api';
+import Spinner from '../Spinner';
 
 const LoggedInView = () => {
 	const [notes, setNotes] = useState<NoteModel[]>([]);

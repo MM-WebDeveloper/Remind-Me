@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { User } from '../models/user';
 import NavbarLoggedInView from './NavbarLoggedInView';
 import NavbarLoggedOutView from './NavbarLoggedOutView';
@@ -15,7 +16,7 @@ const Navbar = ({
 }: NavbarProps) => {
 	return (
 		<nav>
-			<div>Logo</div>
+			<Link to='/'>Logo</Link>
 			{authenticatedUser ? (
 				<NavbarLoggedInView
 					authenticatedUser={authenticatedUser}
@@ -24,6 +25,7 @@ const Navbar = ({
 			) : (
 				<NavbarLoggedOutView onAuthentication={onAuthentication} />
 			)}
+			<Link to={'/privacy'}>Privacy</Link>
 		</nav>
 	);
 };
