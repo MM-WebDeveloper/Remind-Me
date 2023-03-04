@@ -22,10 +22,10 @@ const EntryModal = ({
 		email: '',
 		password: '',
 	});
-	const inputRef = useRef<any>();
+	const inputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
-		inputRef.current.focus();
+		inputRef.current?.focus();
 		setUser({ username: '', email: '', password: '' });
 	}, [typeOfEntry]);
 
@@ -42,7 +42,6 @@ const EntryModal = ({
 				onAuthentication(loggedInUser);
 			}
 		} catch (error) {
-			alert(error);
 			let message = 'Unknown Error';
 			if (error instanceof Error) message = error.message;
 			displayEntryError(message);
