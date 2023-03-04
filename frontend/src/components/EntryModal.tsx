@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { User } from '../models/user';
 import * as UsersApi from '../network/users.api';
 
@@ -22,8 +22,10 @@ const EntryModal = ({
 		email: '',
 		password: '',
 	});
+	const inputRef = useRef<any>();
 
 	useEffect(() => {
+		inputRef.current.focus();
 		setUser({ username: '', email: '', password: '' });
 	}, [typeOfEntry]);
 
@@ -52,6 +54,7 @@ const EntryModal = ({
 			<form id='userMutation' onSubmit={(e) => onSubmit(e)} action='submit'>
 				<label htmlFor='Username'>Username</label>
 				<input
+					ref={inputRef}
 					onChange={(e) => setUser({ ...user, username: e.target.value })}
 					type='text'
 					placeholder='Username'
@@ -84,12 +87,14 @@ const EntryModal = ({
 					value={user.password}
 				/>
 				{entryError && <p>{entryError}</p>}
-				<button type='button' onClick={cancelEntryModal}>
-					Cancel
-				</button>
-				<button id='userMutation' type='submit'>
-					{typeOfEntry ? 'Register' : 'Login'}
-				</button>
+				<div>
+					<button type='button' onClick={cancelEntryModal}>
+						Cancel
+					</button>
+					<button id='userMutation' type='submit'>
+						{typeOfEntry ? 'Register' : 'Login'}
+					</button>
+				</div>
 			</form>
 		</div>
 	);
